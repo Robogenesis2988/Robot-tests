@@ -18,7 +18,7 @@ class MyRobot(wpilib.TimedRobot):
         self.drive = wpilib.drive.DifferentialDrive(self.left_motor, self.right_motor)
         self.stick = wpilib.Joystick(0)
         self.timer = wpilib.Timer()
-        self.solenoid = wpilib.Solenoid(1, wpilib.PneumaticsModuleType.CTREPCM,0)
+        self.solenoid = wpilib.DoubleSolenoid(wpilib.PneumaticsModuleType.CTREPCM,2,3)
         
 
     def autonomousInit(self):
@@ -34,13 +34,25 @@ class MyRobot(wpilib.TimedRobot):
             self.drive.arcadeDrive(-0.5, 0)  # Drive forwards at half speed
         else:
             self.drive.arcadeDrive(0, 0)  # Stop robot
-
+    def teleopInit(self):
+        pass
+        # self.solenoid.set(self.solenoid.Value.kReverse)
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
         self.drive.arcadeDrive(self.stick.getY(), self.stick.getX())
 
         if self.stick.getRawButtonPressed(3):
+            # if self.solenoid.get() == self.solenoid.Value.kForward:
+            #     self.solenoid.set(self.solenoid.Value.kReverse)
+            # elif self.solenoid.get() == self.solenoid.Value.kReverse:
+            #     self.solenoid.set(self.solenoid.Value.kForward)
+            # self.solenoid.set(self.solenoid.get)
             self.solenoid.toggle()
+            if self.solenoid.get() == self.solenoid.Value.kOff:
+                self.solenoid.set(self.solenoid.Value.kForward)
+            # self.solenoid.set(wpilib.DoubleSolenoid.Value.kForward)
+            print("worked")
+            
         
 
 

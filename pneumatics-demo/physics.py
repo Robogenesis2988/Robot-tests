@@ -40,7 +40,7 @@ class PhysicsEngine:
         # Gyro
         # self.gyro = wpilib.simulation.AnalogGyroSim(1)
 
-        self.pnuematics = wpilib.simulation.CTREPCMSim()
+        self.pnuematics = wpilib.simulation.CTREPCMSim(2)
 
         self.position = 0
 
